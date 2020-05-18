@@ -3,6 +3,73 @@
 
     include_once "config/database.php";
     include_once "database/querybuilder.php";
+    $pesan_gagal = "";
+    function simpan_data($data)
+    {
+      if(session_status() == PHP_SESSION_NONE)
+      {
+        session_start();
+      }
+      $_SESSION['nik'] = $data['nik'];
+      $_SESSION['nama_lengkap'] = $data['nama_lengkap'];
+      $_SESSION['jabatan'] = $data['jabatan'];
+      $_SESSION['jenis_kelamin'] = $data['agama'];
+      $_SESSION['agama'] = $data['alamat'];
+      $_SESSION['alamat'] = $data['alamat'];
+      $_SESSION['nomor_telepon'] = $data['nomor_telepon'];
+      $_SESSION['status_pernikahan'] = $data['status_pernikahan'];
+      $_SESSION['status'] = $data['status'];
+      $_SESSION['id_cabang'] = $data['id_cabang'];
+    }
+
+      // aksi login
+
+      if(isset($_POST["nik"]) && isset($_POST["kata_sandi"]))
+      {
+        $nik = addslashes(htmlentities($_POST['nik']));
+        $password = addslashes(htmlentities($_POST['kata_sandi']));
+
+        //cek nik
+        $sql = find('tb_karyawan',array('nik' => $nik))[0];
+        if(count($sql) > 0)
+        {
+          if($sql['kata_sandi'] == $password)
+          {
+            //login berhasil
+            switch($sql['jabatan'])
+            {
+              case '1':
+                simpan_data($sql);
+                header("Location:" . $base_url. "direktur");
+                break;
+              case '2':
+                simpan_data($sql);
+                header("Location:" . $base_url. "direktur");
+                break;
+              case '3':
+                simpan_data($sql);
+                header("Location:" . $base_url. "supervisor");
+                break;
+              case '4':
+                simpan_data($sql);
+                header("Location:" . $base_url. "staff");
+                break;
+              default:
+              //jenis akun tidak diketahui
+              break;
+            }
+          }
+          else
+          {
+            $pesan_gagal = "Username / password salah";
+          }
+        }
+        else
+        {
+          $pesan_gagal = "Akun Tidak Ditemukan";
+        }
+      }
+    $_POST = array();
   ?>
 <!DOCTYPE html>
 <html>
@@ -66,23 +133,7 @@
         <!-- /.col -->
       </div>
     </form>
-    <?php
-    if(isset($_POST) && count($_POST) > 0)
-    {
-        $params = array(
-            'nik' => $_POST['nik'],
-            'kata_sandi' => $_POST['kata_sandi']
-        );
-        $data = find('tb_karyawan',array('nik' => $params['nik'],'kata_sandi' => $params['kata_sandi']));
-        if(count($data) > 0)
-        {
-            session_start();
-            $_SESSION['karyawan'] = $data;
-            header("Location: direktur");
-        }
-    }
-        
-    ?>
+    
     <!-- <div class="social-auth-links text-center">
       <p>- OR -</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using

@@ -1,4 +1,6 @@
 <?php
+include_once "../auth/autentikasi.php";
+authentikasi("1");
 include_once "../utils/url.php";
 session_start();
 session_unset("user");
