@@ -141,6 +141,18 @@
             <li><a href="<?= $base_url ?>supervisor/tarif_borongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Pinjaman</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=""><a href="<?= $base_url ?>supervisor/pinjaman/index.php"><i class="fa fa-circle-o"></i> Lihat Daftar Pinjaman</a></li>
+            <li><a href="<?= $base_url ?>supervisor/pinjaman/create.php"><i class="fa fa-circle-o"></i> Tambah Pinjaman</a></li>
+          </ul>
+        </li>
         <li><a href="<?php echo $base_url?>supervisor/absensi"><i class="fa fa-circle-o text-aqua"></i> <span>Absensi Borongan</span></a></li>
         
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>

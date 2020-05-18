@@ -9,13 +9,13 @@ include_once "../../utils/url.php";
 $base_url = base_url();
 include_once('../layout/index.php');
 
-$borongan = all('tb_borongan');
-
 if(count($_POST)) 
 {
     $list_borongan = $_POST["list_borongan"];
     $list_kehadiran = $_POST["list_kehadiran"];
     $tanggal_sekarang = isset($_GET["tanggal"]) ? $_GET["tanggal"] : date("Y-m-d");
+
+    delete("tb_absensi_borongan", ["tanggal" => $tanggal_sekarang]);
 
     for($i = 0; $i < count($list_borongan); $i++) {
         $data_absen = [
@@ -25,6 +25,27 @@ if(count($_POST))
         ];
         insert('tb_absensi_borongan', $data_absen);
     }
+}
+
+// Load absen berdasarkan tanggal
+if(isset($_GET['tanggal'])) {
+    $tanggal = $_GET['tanggal'];
+    $sql = "SELECT tb_absensi_borongan.status, tb_borongan.id, tb_borongan.nama, tb_borongan.jenis_kelamin FROM tb_absensi_borongan 
+        JOIN tb_borongan ON tb_absensi_borongan.id_borongan = tb_borongan.id
+        WHERE tb_absensi_borongan.tanggal = '$tanggal'";
+    $list_absen = raw($sql);
+} else {
+    $tanggal = date('Y-m-d');
+    $sql = "SELECT tb_absensi_borongan.status, tb_borongan.id, tb_borongan.nama, tb_borongan.jenis_kelamin FROM tb_absensi_borongan 
+        JOIN tb_borongan ON tb_absensi_borongan.id_borongan = tb_borongan.id
+        WHERE tb_absensi_borongan.tanggal = '$tanggal'";
+    $list_absen = raw($sql);
+}
+
+// Jika tidak ada data maka tampilkan daftar karyawan yang ingin di absen
+if(count($list_absen) == 0) {
+    $sql = "SELECT id, nama, jenis_kelamin FROM tb_borongan WHERE status = '1'";
+    $list_absen = raw($sql);
 }
 
 function absen_builder($status) {
@@ -61,10 +82,10 @@ function absen_builder($status) {
     <form action="">
         <div class="row" style="margin-bottom:10px">
             <div class="col-md-6">
-                <input type="date" name="tanggal" class="form-control"/>
+                <input type="date" name="tanggal" value="<?=$tanggal?>" class="form-control"/>
             </div>
             <div class="col-md-6">
-                <a class="btn btn-success" href="<?= $base_url ?>supervisor/borongan/create.php"><i class="fa fa-search"></i> Cari</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Cari</button>
             </div>
         </div>
     </form>
@@ -84,27 +105,26 @@ function absen_builder($status) {
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Jenis Kelamin</th>
-                                        <th>Alamat</th>
-                                        <th>Nomor Telepon</th>
-                                        <th>Status</th>
                                         <th width="30%">Kehadiran</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i = 0 ?>
-                                    <?php foreach ($borongan as $k) : ?>
+                                    <?php foreach ($list_absen as $k) : ?>
                                         <tr>
-                                            <td><?= $k['id'] ?></td>
+                                            <td><?= $i + 1 ?></td>
                                             <td><?= $k['nama'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
-                                            <td><?= $k['alamat'] ?></td>
-                                            <td><?= $k['nomor_telepon'] ?></td>
-                                            <td><?= $k['status'] == 1 ? "<div class='label label-success'>Aktif</div>" : "<div class='label label-danger'>Tidak Aktif</div>" ?></td>
                                             <td>
                                                 <input type="hidden" class="form-check-input" name="list_borongan[]" value="<?=$k['id']?>">
-                                                <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="H">H</label>
-                                                <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="I">I</label>
-                                                <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="A" checked>A</label>
+
+                                                <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="H" <?= isset($k['status']) && $k['status'] == 'Hadir' ? 'checked' : ''?> required>H</label>
+                                                <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="I" <?= isset($k['status']) && $k['status'] == 'Izin' ? 'checked' : ''?> required>I</label>
+                                                <?php if (count($list_absen) != 0): ?>
+                                                    <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="A" <?= isset($k['status']) && $k['status'] == 'Alpa' ? 'checked' : ''?> required>A</label>
+                                                <?php else: ?>
+                                                    <label class="radio-inline"><input type="radio" name="list_kehadiran[<?=$i?>]" value="A" checked required>A</label>
+                                                <?php endif ?>
                                             </td>
                                         </tr>
                                         <?php $i++ ?>

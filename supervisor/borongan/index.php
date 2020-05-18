@@ -63,11 +63,11 @@ $borongan = all('tb_borongan');
                                                     <i class="fa fa-pencil"></i>
                                                 </button>
                                             </a>
-                                            <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>supervisor/borongan/delete.php?id=<?= $k['id'] ?>">
+                                            <!-- <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>supervisor/borongan/delete.php?id=<?= $k['id'] ?>">
                                                 <button class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
-                                            </a>
+                                            </a> -->
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

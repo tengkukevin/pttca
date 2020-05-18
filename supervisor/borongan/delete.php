@@ -2,6 +2,8 @@
     include_once('../../config/database.php');
     include_once('../../database/querybuilder.php');
     include_once('../../utils/url.php');
-    delete('tb_borongan',['id'=>$_GET['id']]);
+
+    update('tb_borongan', array('status' => '0'), array('id' => $_GET['id']));
+    // delete('tb_borongan',['id'=>$_GET['id']]);
     redirect('index.php');
 ?>
