@@ -9,7 +9,7 @@ function authentikasi($posisi_akun = "")
 	}
 
   // Jika tidak ada session
-    if(!isset($_SESSION["posisi"])) 
+    if(!isset($_SESSION["jabatan"])) 
     {
         $base_url = "http://localhost/pttca/";
 		$_SESSION = array();
@@ -19,7 +19,7 @@ function authentikasi($posisi_akun = "")
 	}
 
 	// Jika session ada tapi membuka halaman diluar akses
-    if($_SESSION["posisi"] != $posisi_akun) 
+    if($_SESSION["jabatan"] != $posisi_akun) 
     {
 		$halaman = "";
         switch ($_SESSION["jabatan"]) 

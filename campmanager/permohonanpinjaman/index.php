@@ -1,6 +1,6 @@
 <?php
 include_once "../../auth/autentikasi.php";
-authentikasi("1");
+authentikasi("2");
 include_once "../../config/database.php";
 include_once "../../database/querybuilder.php";
 include_once "../../utils/flashdata.php";
@@ -10,10 +10,11 @@ include_once "../../utils/url.php";
 $base_url = base_url();
 include_once "../layout/index.php";
 
-$karyawan = raw('SELECT k.*,j.nama as nama_jabatan,c.nama as nama_cabang 
-    FROM tb_karyawan as k 
-    JOIN tb_jabatan as j ON k.jabatan = j.id 
-    JOIN tb_cabang as c ON k.id_cabang = c.id');
+$sql = "SELECT b.*, a.biaya 
+    FROM tb_pengajuan_pinjaman_borongan as a 
+    JOIN tb_borongan as b ON b.id = a.id_borongan
+    WHERE a.status = 'Diterima Supervisor'";
+$pinjaman = raw($sql);
 ?>
 <section class="content-header">
     <h1>
@@ -56,7 +57,7 @@ $karyawan = raw('SELECT k.*,j.nama as nama_jabatan,c.nama as nama_cabang
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($karyawan as $k) : ?>
+                                <?php foreach ($pinjaman as $k) : ?>
                                     <tr>
                                         <td><?= $k['nik'] ?></td>
                                         <td><?= $k['nama_lengkap'] ?></td>
@@ -68,12 +69,12 @@ $karyawan = raw('SELECT k.*,j.nama as nama_jabatan,c.nama as nama_cabang
                                         <td><?= $k['status_pernikahan'] == 1 ? "Menikah" : "Belum Menikah" ?></td>
                                         <td><?= $k['status'] == 1 ? "<div class='label label-success'>Aktif</div>" : "<div class='label label-danger'>Tidak Aktif</div>" ?></td>
                                         <td>
-                                            <a href="<?= $base_url ?>direktur/karyawan/update.php?nik=<?= $k['nik'] ?>">
+                                            <a href="<?= $base_url ?>campmanager/karyawan/update.php?nik=<?= $k['nik'] ?>">
                                                 <button class="btn btn-warning btn-sm">
                                                     <i class="fa fa-pencil"></i>
                                                 </button>
                                             </a>
-                                            <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>direktur/karyawan/delete.php?nik=<?= $k['nik'] ?>">
+                                            <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>campmanager/karyawan/delete.php?nik=<?= $k['nik'] ?>">
                                                 <button class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
