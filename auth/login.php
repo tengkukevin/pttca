@@ -68,43 +68,7 @@
       </div>
     </form>
    
-    // if(isset($_POST) && count($_POST) > 0)
-    // {
-    //     $params = array(
-    //         'nik' => $_POST['nik'],
-    //         'kata_sandi' => $_POST['kata_sandi']
-    //     );
-    //     $data = find('tb_karyawan',array('nik' => $params['nik'],'kata_sandi' => $params['kata_sandi']));
-    //     if(count($data) > 0)
-    //     {
-    //       if($data[0]['jabatan'] == 1)
-    //       {
-    //         session_start();
-    //         $_SESSION['direktur'] = $data;
-    //         header("Location: ../direktur/index.php");
-    //       }
-    //       if($data[0]['jabatan'] == 2)
-    //       {
-    //         session_start();
-    //         $_SESSION['area_manager'] = $data;
-    //         header("Location: ../direktur/index.php");
-    //       }
-    //       if($data[0]['jabatan'] == 3)
-    //       {
-    //         session_start();
-    //         $_SESSION['supervisor'] = $data;
-    //         header("Location: ../supervisor/index.php");
-    //       }
-    //       if($data[0]['jabatan'] == 4)
-    //       {
-    //         session_start();
-    //         $_SESSION['staff'] = $data;
-    //         header("Location: ../staff/index.php");
-    //       }
-    //     }
-    // }
-        
-    // ?>
+
     <!-- <div class="social-auth-links text-center">
       <p>- OR -</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
