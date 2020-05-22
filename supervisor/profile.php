@@ -1,10 +1,11 @@
 <?php
+    include_once "../../auth/autentikasi.php";
+    authentikasi("3");
     include_once "../config/database.php";
     include_once "../database/querybuilder.php";
     include_once "../utils/flashdata.php";
     include_once "../utils/formatter.php";
     include_once "../utils/input.php";
-    include_once "../utils/session.php";
     include_once "../utils/url.php";
     $base_url = base_url();
     include_once('layout/index.php');

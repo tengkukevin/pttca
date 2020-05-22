@@ -173,12 +173,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="<?= $base_url ?>direktur/tarif_borongan/index.php"><i class="fa fa-circle-o"></i> Lihat Tarif Borongan</a></li>
-            <li><a href="<?= $base_url ?>direktur/tarif_borongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
+            <li class=""><a href="<?= $base_url ?>direktur/tarifborongan/index.php"><i class="fa fa-circle-o"></i> Lihat Tarif Borongan</a></li>
+            <li><a href="<?= $base_url ?>direktur/tarifborongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
           </ul>
         </li>
         <li><a href="<?php echo $base_url?>direktur/lowongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Lowongan Kerja</span></a></li>
-        
+        <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman</span></a></li>
+        <li><a href="<?php echo $base_url?>direktur/pelanggaran/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pelanggaran</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>
     </section>

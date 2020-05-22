@@ -131,14 +131,14 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-user"></i> <span>Tarif Borongan</span>
+            <i class="fa fa-user"></i> <span>Kegiatan Borongan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="<?= $base_url ?>supervisor/tarif_borongan/index.php"><i class="fa fa-circle-o"></i> Lihat Tarif Borongan</a></li>
-            <li><a href="<?= $base_url ?>supervisor/tarif_borongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
+            <li class=""><a href="<?= $base_url ?>supervisor/kegiatanborongan/index.php"><i class="fa fa-circle-o"></i> Lihat Kegiatan Borongan</a></li>
+            <li><a href="<?= $base_url ?>supervisor/kegiatanborongan/create.php"><i class="fa fa-circle-o"></i> Input Kegiatan Borongan</a></li>
           </ul>
         </li>
         <li class="treeview">

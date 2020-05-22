@@ -4,7 +4,6 @@ include_once "../database/querybuilder.php";
 include_once "../utils/flashdata.php";
 include_once "../utils/formatter.php";
 include_once "../utils/input.php";
-include_once "../utils/session.php";
 include_once "../utils/url.php";
 $base_url = base_url();
 include_once "layout/index.php";
@@ -18,7 +17,7 @@ include_once "layout/index.php";
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Selamat Datang Direktur</h3>
+                    <h3 class="box-title">Selamat Datang Supervisor</h3>
                 </div>
             </div>
         </div>
