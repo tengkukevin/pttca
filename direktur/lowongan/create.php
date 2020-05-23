@@ -14,7 +14,7 @@ $cabang = all("tb_cabang");
 if (count($_POST) > 0) {
     $data = [
         'judul' => $_POST['judul'],
-        'deskripsi' => $_POST['deskripsi'],
+        'deskripsi' => $_POST['editor1'],
         'tanggal' => date('Y-m-d'),
         'berlaku_dari' => $_POST['berlaku_dari'],
         'berlaku_sampai' => $_POST['berlaku_sampai'],
@@ -55,10 +55,16 @@ if (count($_POST) > 0) {
                                     <label for="judul">Judul</label>
                                     <input type="text" class="form-control" name="judul" id="judul" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="deskripsi">Deskripsi</label>
-                                    <textarea class="form-control"  name="deskripsi" id="deskripsi" width="300px"required></textarea>
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="isi">Isi Pengumuman :</label>
+
+                                    <div class="box-body pad">
+                                            <textarea id="editor1" name="editor1" rows="10" cols="80">
+                                            </textarea>
+                                    </div>
                                 </div>
+                            </div>
                                 <div class="form-group">
                                     <label for="berlaku_dari">Tangal Mulai Berlaku</label>
                                     <input type="date" class="form-control"  name="berlaku_dari" id="berlaku_dari" required>
@@ -81,7 +87,18 @@ if (count($_POST) > 0) {
         </div>
     </div>
 </section>
+<script src="<?php echo $base_url?>assets/bower_components/jquery/dist/jquery.min.js"></script>
 
+<script src="<?php echo $base_url?>assets/bower_components/ckeditor/ckeditor.js"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+</script>
 <?php
 include_once "../layout/footer.php";
 ?>

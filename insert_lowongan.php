@@ -4,8 +4,38 @@
     include_once "config/database.php";
     include_once "database/querybuilder.php";
     //cari lowongan
-    $lowongan = all('tb_lowongan');
-    $pengumuman = all('tb_pengumuman');
+    $find = find('tb_lowongan',array('id'=>$_GET['id']))[0];
+    if(count($_POST) > 0)
+    {
+        $nama         = $_FILES['berkas']['name'];
+        $x            = explode('.',$nama);
+        $ekstensi     = strtolower(end($x));
+        $ukuran       = $_FILES['berkas']['size'];
+        $file_tmp     = $_FILES['berkas']['tmp_name'];
+        if($ukuran < 10485760)
+        {
+            $upload_file = $_SERVER['DOCUMENT_ROOT'].'/pttca/assets/berkas/'.$nama;
+            move_uploaded_file($file_tmp,$upload_file);
+            $data = array(
+              'nama'        => $_POST['nama'],
+              'berkas'      => $nama,
+              'nomor_telepon'       =>$_POST['nomor_telepon'],
+              'alamat'   => $_POST['alamat'],
+              'tanggal'        => date('Y-m-d'),
+              'id_lowongan' => $find['id'],
+            );
+            $sql = insert('tb_lamaran',$data);
+            if($sql)
+            {
+                echo "<script>alert('Berhasil mendaftarkan lowongan!')</script>";
+
+            }
+        }
+        else
+        {
+            echo "File yang diupload lebih dari 10MB !";
+        }
+    }
   ?>
 <!DOCTYPE html>
 <html>
@@ -59,50 +89,40 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>Lowongan Kerja</h2>
-      <hr>
-        <?php foreach($lowongan as $l):?>
-            <form method="POST">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="box box-success">
-                    <div class="box-header with-border">
-                      <h3 class="box-title"><a href="<?= $base_url ?>detail_lowongan.php?id=<?php echo $l['id'] ?>"><?php echo $l['judul']?></a></h3>
-                      
-                    </div>
-                    <div class="box-body">
-                      <?php echo $l['deskripsi']?>
-                    </div>
-                    <div class="box-footer">
-                    Mulai dari <?php echo $l['berlaku_dari']?> - <?php echo $l['berlaku_sampai']?>
-                    </div>
-                  </div>
-              </div>
-            </form>
-        <?php endforeach;?>
-    </div>
-    <div class="col-md-12">
-      <h2>Pengumuman</h2>
+        <h2>Lowongan Kerja</h2>
         <hr>
-        <?php foreach($pengumuman as $p):?>
-          <form method="POST">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="box box-warning">
-                  <div class="box-header with-border">
-                    <h3 class="box-title"><a href="<?php echo $base_url?>detail_pengumuman.php?id=<?php echo $p['id']?> "><?php echo $p['judul']?></a></h3>
-                  </div>
-                  <div class="box-body">
-                    <?php echo $p['isi']?>
-                  </div>
-                  <div class="box-footer">
-                  <?php echo $p['tanggal']?>
-                  </div>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                         <h3 class="box-title"><?php echo $find['judul']?>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group has-feedback">
+                                <label for="">Nama :</label>
+                                <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama anda">
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="">Nomor Telepon :</label>
+                                <input type="text" class="form-control" name="nomor_telepon" placeholder="Masukkan Nomor Telepon anda">
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="">Alamat :</label>
+                                <textarea  class="form-control" name="alamat"></textarea>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="">Berkas :</label>
+                                <input type="file" class="form-control" name="berkas" >
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-          </form>
-        <?php endforeach;?>
-    </div>    
+            </form>
+        </div>
   </div>
 </div>
 

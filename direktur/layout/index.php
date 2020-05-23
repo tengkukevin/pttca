@@ -155,6 +155,18 @@
         </li>
         <li class="treeview">
           <a href="#">
+            <i class="fa fa-user"></i> <span>Pengumuman</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=""><a href="<?= $base_url ?>direktur/pengumuman/index.php"><i class="fa fa-circle-o"></i> Lihat Pengumuman</a></li>
+            <li><a href="<?= $base_url ?>direktur/pengumuman/create.php"><i class="fa fa-circle-o"></i> Tambah Pengumuman</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-user"></i> <span>Borongan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
