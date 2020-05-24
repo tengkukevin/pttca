@@ -28,7 +28,7 @@ function authentikasi($posisi_akun = "")
 				$halaman = "direktur";
 				break;
 			case '2':
-				$halaman = "campmanager";
+				$halaman = "areamanager";
 				break;
 			case '3':
 				$halaman = "supervisor";

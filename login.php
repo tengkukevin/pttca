@@ -44,7 +44,7 @@
                 break;
               case '2':
                 simpan_data($sql);
-                header("Location:" . $base_url. "direktur");
+                header("Location:" . $base_url. "areamanager");
                 break;
               case '3':
                 simpan_data($sql);

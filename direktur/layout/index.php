@@ -155,6 +155,18 @@
         </li>
         <li class="treeview">
           <a href="#">
+            <i class="fa fa-user"></i> <span>Penggajian</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=""><a href="<?= $base_url ?>direktur/penggajian"><i class="fa fa-circle-o"></i> Penggajian Karyawan</a></li>
+            <li><a href="<?= $base_url ?>direktur/penggajianborongan"><i class="fa fa-circle-o"></i> Penggajian Borongan</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-user"></i> <span>Borongan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -178,7 +190,8 @@
           </ul>
         </li>
         <li><a href="<?php echo $base_url?>direktur/lowongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Lowongan Kerja</span></a></li>
-        <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman</span></a></li>
+        <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Karyawan</span></a></li>
+        <li><a href="<?php echo $base_url?>direktur/pinjamanborongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Borongan</span></a></li>
         <li><a href="<?php echo $base_url?>direktur/pelanggaran/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pelanggaran</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>

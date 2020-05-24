@@ -10,7 +10,7 @@ include_once "../../utils/url.php";
 $base_url = base_url();
 include_once('../layout/index.php');
 
-$sql = "SELECT b.nik, b.nama_lengkap, a.tingkat, a.tanggal FROM tb_pelanggaran as a
+$sql = "SELECT b.nik, b.nama_lengkap, a.id, a.tingkat, a.tanggal FROM tb_pelanggaran as a
     JOIN tb_karyawan as b ON b.nik = a.id_karyawan";
 $list_pelanggaran = raw($sql);
 
@@ -18,26 +18,26 @@ $list_pelanggaran = raw($sql);
 
 <section class="content-header">
     <h1>
-        Tarif Borongan
+        Pelanggaran
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
-        <li class="active">Tarif Borongan</li>
+        <li class="active">Pelanggaran</li>
     </ol>
 </section>
 
 <section class="content">
     <div class="row" style="margin-bottom:10px">
         <div class="col-md-12">
-            <a class="btn btn-success" href="<?= $base_url ?>direktur/pelanggaran/create.php"><i class="fa fa-plus"></i> Tambah Tarif Borongan</a>
+            <a class="btn btn-success" href="<?= $base_url ?>direktur/pelanggaran/create.php"><i class="fa fa-plus"></i> Input Pelanggaran</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Data Tarif Borongan</h3>
+                    <h3 class="box-title">Data Pelanggaran</h3>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -59,7 +59,16 @@ $list_pelanggaran = raw($sql);
                                         <td><?= $k['tingkat'] ?></td>
                                         <td><?= $k['tanggal'] ?></td>
                                         <td>
-
+                                            <a href="<?= $base_url ?>direktur/pelanggaran/update.php?id=<?= $k['id'] ?>">
+                                                <button class="btn btn-warning btn-sm">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </a>
+                                            <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>direktur/pelanggaran/delete.php?id=<?= $k['id'] ?>">
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
