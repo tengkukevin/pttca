@@ -1,12 +1,12 @@
 <?php
-    $base_url = "http://localhost/pttca/";
+$base_url = "http://localhost/pttca/";
 
-    include_once "config/database.php";
-    include_once "database/querybuilder.php";
-    //cari lowongan
-    $lowongan = all('tb_lowongan');
-    $pengumuman = all('tb_pengumuman');
-  ?>
+include_once "config/database.php";
+include_once "database/querybuilder.php";
+//cari lowongan
+$lowongan = find('tb_lowongan',array('id'=> $_GET['id']))[0];
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,15 +16,15 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="<?= $base_url?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?=$base_url?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= $base_url?>assets/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?=$base_url?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="<?= $base_url?>assets/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?=$base_url?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= $base_url?>assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?=$base_url?>assets/dist/css/AdminLTE.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="<?= $base_url?>assets/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="<?=$base_url?>assets/plugins/iCheck/square/blue.css">
 
   <!-- Google Font -->
 
@@ -47,8 +47,8 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     
-     
+
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo $base_url?>">Beranda</a></li>
         <li><a href="<?php echo $base_url?>login.php">Login</a></li>
@@ -59,51 +59,34 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>Lowongan Kerja</h2>
-      <hr>
-        <?php foreach($lowongan as $l):?>
-            <form method="POST">
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?php echo $lowongan['judul']?></h3>
+              <div class="box-tools pull-right">
+                <?php echo $lowongan['tanggal']?>
+              </div>
+            </div>
+          </div>
+  </div>
+
+        <div class="col-md-12">
+          <div class="box box-default">
+            <div class="box-body">
               <div class="row">
-                <div class="col-md-3">
-                  <div class="box box-success">
-                    <div class="box-header with-border">
-                      <h3 class="box-title"><a href="<?= $base_url ?>detail_lowongan.php?id=<?php echo $l['id'] ?>"><?php echo $l['judul']?></a></h3>
-                      
-                    </div>
-                    <div class="box-body">
-                      <?php echo $l['deskripsi']?>
-                    </div>
-                    <div class="box-footer">
-                    Mulai dari <?php echo $l['berlaku_dari']?> - <?php echo $l['berlaku_sampai']?>
-                    </div>
+                  <div class="col-md-12">
+                      <?php echo $lowongan['deskripsi']?>
                   </div>
               </div>
-            </form>
-        <?php endforeach;?>
-    </div>
-    <div class="col-md-12">
-      <h2>Pengumuman</h2>
-        <hr>
-        <?php foreach($pengumuman as $p):?>
-          <form method="POST">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="box box-warning">
-                  <div class="box-header with-border">
-                    <h3 class="box-title"><a href="<?php echo $base_url?>detail_pengumuman.php?id=<?php echo $p['id']?> "><?php echo $p['judul']?></a></h3>
-                  </div>
-                  <div class="box-body">
-                    <?php echo $p['isi']?>
-                  </div>
-                  <div class="box-footer">
-                  <?php echo $p['tanggal']?>
-                  </div>
-                </div>
             </div>
-          </form>
-        <?php endforeach;?>
-    </div>    
-  </div>
+            <div class="box-footer">
+              <div class="pull-right">
+                Mulai dari <?php echo $lowongan['berlaku_dari']?> - <?php echo $lowongan['berlaku_sampai']?>
+              </div>
+                  <a href="<?php echo $base_url?>insert_lowongan.php?id=<?php echo $lowongan['id']?>"><button class="btn btn-primary">Isi Lamaran</button></a>
+            </div>
+      </div>
+    </div>     
+
 </div>
 
 
