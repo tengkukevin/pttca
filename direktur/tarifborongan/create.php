@@ -14,6 +14,7 @@ if (count($_POST) > 0) {
     $data = [
         'nama' => $_POST['nama'],
         'tarif' => $_POST['tarif'],
+        'status' => 1,
     ];
     $add = insert('tb_tarif_borongan', $data);
     if($add>0){

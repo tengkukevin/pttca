@@ -154,6 +154,7 @@
           </ul>
         </li>
         <li><a href="<?php echo $base_url?>supervisor/absensi"><i class="fa fa-circle-o text-aqua"></i> <span>Absensi Borongan</span></a></li>
+        <li><a href="<?php echo $base_url?>supervisor/laporankegiatan"><i class="fa fa-circle-o text-aqua"></i> <span>Laporan Kegiatan Borongan</span></a></li>
         
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>

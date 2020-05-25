@@ -18,7 +18,7 @@ if (isset($_GET['id'])) {
 
     $borongan = find("tb_pengajuan_pinjaman_borongan", array("id" => $_GET['id']))[0];
 
-    insert("tb_pinjaman_borongan", array("id_borongan" => $borongan["id"],
+    insert("tb_pinjaman_borongan", array("id_borongan" => $borongan["id_borongan"],
 		"jumlah" => $borongan["biaya"],
 		"tanggal" => $borongan["tanggal"],
 		"dibayar" => "0",

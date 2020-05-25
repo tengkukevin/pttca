@@ -11,8 +11,8 @@ $base_url = base_url();
 include_once('../layout/index.php');
 
 
-$sql = "SELECT a.*, b.nama_lengkap, b.jenis_kelamin FROM tb_pengajuan_pinjaman as a 
-    JOIN tb_karyawan as b ON a.id_karyawan = b.nik WHERE a.status = 'Diterima Area Manager'";
+$sql = "SELECT a.*, b.nama, b.jenis_kelamin FROM tb_gaji_borongan as a 
+    JOIN tb_borongan as b ON a.id_borongan = b.id";
 $list_permohonan = raw($sql);
 ?>
 
@@ -40,7 +40,7 @@ $list_permohonan = raw($sql);
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Daftar Pembayaran</h3>
+                        <h3 class="box-title">Daftar Pembayaran Gaji Borongan</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -50,7 +50,7 @@ $list_permohonan = raw($sql);
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Jenis Kelamin</th>
-                                        <th>Gaji</th>
+                                        <th>Total Gaji</th>
                                         <th>Potongan</th>
                                         <th>Gaji Diterima</th>
                                         <th>Aksi</th>
@@ -63,15 +63,12 @@ $list_permohonan = raw($sql);
                                             <td><?= $i + 1 ?></td>
                                             <td><?= $k['nama'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
-                                            <td><?= $k['biaya'] ?></td>
-                                            <td><?= $k['tanggal'] ?></td>
-                                            <td><?= $k['status'] ?></td>
+                                            <td><?= $k['total_gaji'] ?></td>
+                                            <td><?= $k['potongan'] ?></td>
+                                            <td><?= $k['dibayar'] ?></td>
                                             <td>
-                                                <a href="<?= $base_url ?>areamanager/permohonanpinjaman/terima.php?id=<?= $k['id'] ?>" class="btn btn-success btn-sm">
-                                                    <i class="fa fa-check"></i> Terima
-                                                </a>
-                                                <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>areamanager/permohonanpinjaman/tolak.php?id=<?= $k['id'] ?>" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-close"></i> Tolak
+                                                <a href="<?= $base_url ?>direktur/penggajianborongan/update.php?id=<?= $k['id'] ?>" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-eye"></i> Lihat Detail
                                                 </a>
                                             </td>
                                         </tr>
