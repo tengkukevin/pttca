@@ -190,6 +190,7 @@
             <li><a href="<?= $base_url ?>direktur/tarifborongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
           </ul>
         </li>
+        <li><a href="<?php echo $base_url?>direktur/pengumuman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pengumuman</span></a></li>
         <li><a href="<?php echo $base_url?>direktur/lowongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Lowongan Kerja</span></a></li>
         <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Karyawan</span></a></li>
         <li><a href="<?php echo $base_url?>direktur/pinjamanborongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Borongan</span></a></li>
