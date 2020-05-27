@@ -12,7 +12,7 @@ include_once('../layout/index.php');
 
 
 $sql = "SELECT a.*, b.nama_lengkap, b.jenis_kelamin FROM tb_pengajuan_pinjaman as a 
-    JOIN tb_karyawan as b ON a.id_karyawan = b.nik WHERE a.status = 'Diterima Area Manager'";
+    JOIN tb_karyawan as b ON a.id_karyawan = b.nik WHERE a.status = 'Diterima Area Manager' OR a.status = 'Diterima Direktur' OR a.status = 'Ditolak Direktur'";
 $list_permohonan = raw($sql);
 ?>
 
@@ -56,12 +56,23 @@ $list_permohonan = raw($sql);
                                     <?php foreach ($list_permohonan as $k) : ?>
                                         <tr>
                                             <td><?= $i + 1 ?></td>
-                                            <td><?= $k['nama'] ?></td>
+                                            <td><?= $k['nama_lengkap'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
                                             <td><?= $k['biaya'] ?></td>
                                             <td><?= $k['tanggal'] ?></td>
                                             <td><?= $k['status'] ?></td>
-                                            <td></td>
+                                            <td>
+                                                <?php if ($k['status'] == "Diterima Area Manager"): ?>
+                                                    <a href="<?= $base_url ?>direktur/pinjaman/terima.php?id=<?= $k['id'] ?>" class="btn btn-success btn-sm">
+                                                        <i class="fa fa-check"></i> Terima
+                                                    </a>
+                                                    <a onclick="return confirm('Apakah anda yakin?')" href="<?= $base_url ?>direktur/pinjaman/tolak.php?id=<?= $k['id'] ?>" class="btn btn-danger btn-sm">
+                                                        <i class="fa fa-close"></i> Tolak
+                                                    </a>
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif ?>
+                                            </td>
                                         </tr>
                                         <?php $i++ ?>
                                     <?php endforeach; ?>
