@@ -8,12 +8,11 @@ include_once "../../utils/formatter.php";
 include_once "../../utils/input.php";
 include_once "../../utils/url.php";
 $base_url = base_url();
-
 if (isset($_GET['id'])) {
     $data = [
-        'status' => 'Diterima Area Manager'
+        'status' => 'Ditolak Area Manager'
     ];
-    $add = update('tb_pengajuan_pinjaman', $data, array("id" => $_GET['id']));
-    echo "<script>alert('Pinjaman disetujui!')</script>";
+    $add = update('tb_pengajuan_pinjaman_borongan', $data, array("id" => $_GET['id']));
+    echo "<script>alert('Pinjaman ditolak!')</script>";
 }
 redirect('index.php');

@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>PTTCA | PT Tri Canis Aurum</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -45,9 +45,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini" style="font-size: 12px">PTTCA</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>PT</b> Tri Canis Aurum</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -93,26 +93,6 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="<?= $base_url ?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -149,53 +129,29 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="<?= $base_url ?>direktur/karyawan/index.php"><i class="fa fa-circle-o"></i> Lihat Karyawan</a></li>
-            <li><a href="<?= $base_url ?>direktur/karyawan/create.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-user"></i> <span>Penggajian</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
+            <li class=""><a href="<?= $base_url ?>direktur/karyawan/index.php"><i class="fa fa-circle-o"></i> Kelola Karyawan</a></li>
+            <li class=""><a href="<?= $base_url ?>direktur/absensi/index.php"><i class="fa fa-circle-o"></i> Absensi</a></li>
             <li class=""><a href="<?= $base_url ?>direktur/penggajian"><i class="fa fa-circle-o"></i> Penggajian Karyawan</a></li>
-            <li><a href="<?= $base_url ?>direktur/penggajianborongan"><i class="fa fa-circle-o"></i> Penggajian Borongan</a></li>
+            <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span> Perm. Pinjaman Karyawan</span></a></li>
+            <li><a href="<?php echo $base_url?>direktur/pelanggaran/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pelanggaran</span></a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-
             <i class="fa fa-user"></i> <span>Borongan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="<?= $base_url ?>direktur/borongan/index.php"><i class="fa fa-circle-o"></i> Lihat Borongan</a></li>
-            <li><a href="<?= $base_url ?>direktur/borongan/create.php"><i class="fa fa-circle-o"></i> Tambah Borongan</a></li>
+            <li class=""><a href="<?= $base_url ?>direktur/borongan/index.php"><i class="fa fa-circle-o"></i> Kelola Borongan</a></li>
+            <li class=""><a href="<?= $base_url ?>direktur/tarifborongan/index.php"><i class="fa fa-circle-o"></i> Kelola Tarif Borongan</a></li>
+            <li><a href="<?= $base_url ?>direktur/penggajianborongan"><i class="fa fa-circle-o"></i> Penggajian Borongan</a></li>
+            <li><a href="<?php echo $base_url?>direktur/pinjamanborongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Perm. Pinjaman Borongan</span></a></li>
           </ul>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-user"></i> <span>Tarif Borongan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class=""><a href="<?= $base_url ?>direktur/tarifborongan/index.php"><i class="fa fa-circle-o"></i> Lihat Tarif Borongan</a></li>
-            <li><a href="<?= $base_url ?>direktur/tarifborongan/create.php"><i class="fa fa-circle-o"></i> Tambah Tarif Borongan</a></li>
-          </ul>
-        </li>
-        <li><a href="<?php echo $base_url?>direktur/pengumuman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pengumuman</span></a></li>
         <li><a href="<?php echo $base_url?>direktur/lowongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Lowongan Kerja</span></a></li>
-        <li><a href="<?php echo $base_url?>direktur/pinjaman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Karyawan</span></a></li>
-        <li><a href="<?php echo $base_url?>direktur/pinjamanborongan/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pinjaman Borongan</span></a></li>
-        <li><a href="<?php echo $base_url?>direktur/pelanggaran/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pelanggaran</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li><a href="<?php echo $base_url?>direktur/pengumuman/index.php"><i class="fa fa-circle-o text-aqua"></i> <span>Pengumuman</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

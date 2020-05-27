@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     $data = [
         'status' => 'Diterima Area Manager'
     ];
-    $add = update('tb_pengajuan_pinjaman', $data, array("id" => $_GET['id']));
+    $add = update('tb_pengajuan_pinjaman_borongan', $data, array("id" => $_GET['id']));
     echo "<script>alert('Pinjaman disetujui!')</script>";
 }
 redirect('index.php');

@@ -1,6 +1,4 @@
 <?php
-    include_once "../auth/autentikasi.php";
-    authentikasi("1");
 
     include_once "../config/database.php";
     include_once "../database/querybuilder.php";
@@ -9,16 +7,12 @@
     include_once "../utils/input.php";
     include_once "../utils/session.php";
     include_once "../utils/url.php";
+    include_once "../auth/autentikasi.php";
+    authentikasi("1");
     $base_url = base_url();
     include_once('layout/index.php');
-    if(!isset($_SESSION['karyawan']))
-    {
-        header("Location: login.php");
-    }
-    else
-    {
-        $data = find("tb_karyawan",array("nik" => $_SESSION['karyawan'][0]['nik']));
-    }
+    
+    $data = find("tb_karyawan",array("nik" => $_SESSION['nik']));
 ?>
 <style>
     .example-modal .modal {
@@ -72,8 +66,7 @@
           </div>
           <div class="col-xs-1">
             <h4>:</h4>
-          </div>
-         <h4 class="text-muted"><?=$data[0]['kata_sandi'];?></h4> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+          </div><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                 Ubah Kata Sandi
               </button>
           <hr>

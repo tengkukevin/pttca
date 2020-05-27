@@ -1,5 +1,4 @@
 <?php
-session_start();
 function session_set($keyorarray, $val = "")
 {
 	if(is_array($keyorarray)) {

@@ -12,43 +12,23 @@ $base_url = base_url();
 // $tanggal_dipilih = isset()
 
 include_once "../layout/index.php";
+$gaji_sudah_ada = false;
 
-if(isset($_GET["borongan"]) && isset($_GET["tanggal"]))
+if(isset($_GET["karyawan"]) && isset($_GET["tanggal"]))
 {
-    $borongan = $_GET["borongan"];
+    $karyawan = $_GET["karyawan"];
     $bulan = substr($_GET["tanggal"], 5, 2);
     $tahun = substr($_GET["tanggal"], 0, 4);
-    $sql = "SELECT tb_tarif_borongan.id, tb_tarif_borongan.nama, SUM(tb_detail_kegiatan.jumlah) as jumlah FROM tb_detail_kegiatan
-        JOIN tb_kegiatan ON tb_kegiatan.id = tb_detail_kegiatan.id_kegiatan
-        JOIN tb_tarif_borongan ON tb_detail_kegiatan.id_tarif_borongan = tb_tarif_borongan.id
-        WHERE tb_kegiatan.id_borongan = '$borongan' AND MONTH(tb_kegiatan.tanggal) = '$bulan' AND YEAR(tb_kegiatan.tanggal) = '$tahun'
-        GROUP BY tb_detail_kegiatan.id_tarif_borongan";
-    $data_kegiatan = raw($sql);
 
-    $sql = "SELECT * FROM tb_gaji_borongan WHERE id_borongan = '$borongan' AND bulan = '$bulan' AND tahun = '$tahun'";
+    $sql = "SELECT * FROM tb_gaji WHERE id_karyawan = '$karyawan' AND bulan = '$bulan' AND tahun = '$tahun'";
     $gaji_sudah_ada = count(raw($sql)) > 0;
+
+    $sql = "SELECT tb_jabatan.gaji_pokok FROM tb_jabatan 
+        JOIN tb_karyawan ON tb_karyawan.jabatan = tb_jabatan.id 
+        WHERE tb_karyawan.nik = '$karyawan'";
+    $gaji_pokok = raw($sql)[0]["gaji_pokok"];
 }
 
-function urus_pembayaran_hutang($id_borongan, $dibayar)
-{
-    $sql = "SELECT * FROM tb_pinjaman_borongan WHERE id_borongan = '$id_borongan' AND status = '0' ORDER BY id ASC";
-    $daftar_utang = raw($sql);
-    $uang_dibayar = $dibayar;
-    foreach ($daftar_utang as $utang) {
-        $sisa_utang = $utang['jumlah'] - $utang['dibayar'];
-        if(($uang_dibayar - $sisa_utang) > 0)
-        {
-            // Jika uang dibayar pas maka utang lunas
-            update("tb_pinjaman_borongan", array("dibayar" => $utang["jumlah"]), array("id" => $utang["id"]));
-            $sisa_utang -= $sisa_utang;
-        }
-        else
-        {
-            update("tb_pinjaman_borongan", array("dibayar" => $utang['dibayar'] + $uang_dibayar), array("id" => $utang["id"]));
-            break;
-        }
-    }
-}
 
 if (count($_POST) > 0) 
 {
@@ -56,18 +36,19 @@ if (count($_POST) > 0)
     $potongan = $_POST["potongan"];
     $total_gaji_dibayar = $_POST["dibayar"];
 
-    // ID gaji borongan yang belum dibayar
-    $gaji_borongan = find("tb_gaji_borongan", array("id_borongan" => $borongan, "bulan" => $bulan, "tahun" => $tahun));
+    // ID gaji karyawan yang belum dibayar
+    $gaji_karyawan = find("tb_gaji", array("id_karyawan" => $karyawan, "bulan" => $bulan, "tahun" => $tahun));
     // Gaji pernah dibayar
-    if(count($gaji_borongan) > 0) {
+    if(count($gaji_karyawan) > 0) {
 
     } else {
-        $borongan = $_POST["borongan"];
+        $karyawan = $_POST["karyawan"];
         $bulan = substr($_POST["tanggal"], 5, 2);
         $tahun = substr($_POST["tanggal"], 0, 4);
 
-        delete("tb_gaji_borongan", array("id_borongan" => $borongan, "bulan" => $bulan, "tahun" => $tahun));
-        $id_gaji = insert_id("tb_gaji_borongan", array("id_borongan" => $borongan, 
+        delete("tb_gaji", array("id_karyawan" => $karyawan, "bulan" => $bulan, "tahun" => $tahun));
+        $id_gaji = insert_id("tb_gaji", array(
+            "id_karyawan" => $karyawan, 
             "bulan" => $bulan, 
             "tahun" => $tahun,
             "tanggal" => date("Y-m-d"),
@@ -77,27 +58,43 @@ if (count($_POST) > 0)
         );
         if($potongan > 0)
         {
-            // insert("tb_pembayaran_pinjaman_borongan", array("id_pinjaman" => $id_pinjaman,
-            //     "id_gaji_borongan" => $id_gaji,
-            //     "biaya" => $potongan,
-            //     "tanggal" => date("Y-m-d"))
-            // );
-            urus_pembayaran_hutang($borongan, $potongan);
+            urus_pembayaran_hutang($karyawan, $potongan);
         }
     }
 }
 
 
-$list_borongan = find("tb_borongan", array("status" => '1'));
-$list_tarif = all("tb_tarif_borongan");
+function urus_pembayaran_hutang($id_karyawan, $dibayar)
+{
+    $sql = "SELECT * FROM tb_pinjaman WHERE id_karyawan = '$id_karyawan' AND status = '0' ORDER BY id ASC";
+    $daftar_utang = raw($sql);
+    $uang_dibayar = $dibayar;
+    foreach ($daftar_utang as $utang) {
+        $sisa_utang = $utang['jumlah'] - $utang['dibayar'];
+        if(($uang_dibayar - $sisa_utang) > 0)
+        {
+            // Jika uang dibayar pas maka utang lunas
+            update("tb_pinjaman", array("dibayar" => $utang["jumlah"]), array("id" => $utang["id"]));
+            $sisa_utang -= $sisa_utang;
+        }
+        else
+        {
+            update("tb_pinjaman", array("dibayar" => $utang['dibayar'] + $uang_dibayar), array("id" => $utang["id"]));
+            break;
+        }
+    }
+}
+
+
+$list_karyawan = find("tb_karyawan", array("status" => '1'));
 ?>
 <section class="content-header">
     <h1>
-        Form Pembayaran Gaji Borongan
+        Form Pembayaran Gaji Karyawan
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
-        <li><a href="<?= $base_url ?>direktur/cabang/index.php">Gaji Borongan</a></li>
+        <li><a href="<?= $base_url ?>direktur/cabang/index.php">Gaji Karyawan</a></li>
         <li class="active">Tambah</li>
     </ol>
 </section>
@@ -108,17 +105,17 @@ $list_tarif = all("tb_tarif_borongan");
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Formulir Pembayaran Gaji Borongan</h3>
+                    <h3 class="box-title">Formulir Pembayaran Gaji Karyawan</h3>
                 </div>
                     <div class="box-body">
                         <form action="" method="GET">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="nama">Data Borongan</label>
-                                        <select name="borongan" class="form-control">
-                                            <?php foreach ($list_borongan as $borongan): ?>
-                                                <option value="<?=$borongan["id"]?>" <?=isset($_GET['borongan']) && $_GET["borongan"] == $borongan["id"] ? "selected" : ""?>><?=$borongan["nama"]?></option>
+                                        <label for="nama">Data Karyawan</label>
+                                        <select name="karyawan" class="form-control">
+                                            <?php foreach ($list_karyawan as $karyawan): ?>
+                                                <option value="<?=$karyawan["nik"]?>" <?=isset($_GET['karyawan']) && $_GET["karyawan"] == $karyawan["nik"] ? "selected" : ""?>><?=$karyawan["nama_lengkap"]?></option>
                                             <?php endforeach ?>
                                         </select>
                                     </div>
@@ -151,35 +148,11 @@ $list_tarif = all("tb_tarif_borongan");
                         <h3 class="box-title">Formulir Pembayaran Gaji Borongan</h3>
                     </div>
                     <form action="" method="POST">
-                        <input type="hidden" value="<?=$_GET["borongan"]?>" name="borongan">
+                        <input type="hidden" value="<?=$_GET["karyawan"]?>" name="karyawan">
                         <input type="hidden" value="<?=$_GET["tanggal"]?>" name="tanggal">
                     <div class="box-body">
                         <div class="row">
-                            <?php $total_gaji = 0 ?>
-                            <?php for ($i = 0; $i < count($list_tarif); $i++): ?>
-                                <?php foreach ($data_kegiatan as $kegiatan): ?>
-                                    <?php if ($list_tarif[$i]['id'] == $kegiatan['id']): ?>
-                                        <?php $total_gaji += $kegiatan["jumlah"] * $list_tarif[$i]["tarif"]?>
-
-                                        <input type="hidden" value="<?=$list_tarif[$i]["nama"]?>" name="nama[]">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label"><?=$list_tarif[$i]["nama"]?></label>
-                                                    <div class="col-sm-3">
-
-                                                        <input type="text" class="form-control" name="kegiatan[]" placeholder="<?=$kegiatan["jumlah"]?>" value="<?=$kegiatan["jumlah"]?>" readonly>
-                                                    </div>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" name="tarif[]" placeholder="<?=$list_tarif[$i]["tarif"]?>" value="<?=$list_tarif[$i]["tarif"]?>" readonly>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" name="totalharga[]" value="<?=$kegiatan["jumlah"]*$list_tarif[$i]["tarif"]?>" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endfor ?>
+                            <?php $total_gaji = $gaji_pokok ?>
                         </div>
 
                         <hr>
@@ -213,7 +186,7 @@ $list_tarif = all("tb_tarif_borongan");
 
                     </div>
                     <div class="box-footer">
-                        <a href="<?= $base_url ?>direktur/penggajianborongan/index.php" tabindex="10">
+                        <a href="<?= $base_url ?>direktur/penggajian/index.php" tabindex="10">
                             <button type="button" class="btn btn-default"><i class="fa fa-angle-left"></i> Kembali</button>
                         </a>
                         <button type="submit" class="btn btn-success" tabindex="11"><i class="fa fa-plus"></i> Tambah</button>
@@ -229,7 +202,7 @@ $list_tarif = all("tb_tarif_borongan");
                             <h3 class="box-title">Gaji telah dibayar</h3>
                         </div>
                         <div class="box-footer">
-                            <a href="<?= $base_url ?>direktur/penggajianborongan/index.php" tabindex="10">
+                            <a href="<?= $base_url ?>direktur/penggajian/index.php" tabindex="10">
                                 <button type="button" class="btn btn-default"><i class="fa fa-angle-left"></i> Kembali</button>
                             </a>
                         </div>

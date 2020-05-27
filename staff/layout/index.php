@@ -86,8 +86,8 @@
           </a>
         </li>
         <li>
-          <a href="<?php echo $base_url?>staff/pinjaman.php">
-            <i class="fa fa-hand-stop-o text-aqua"></i> <span>Lihat Pinjaman</span>
+          <a href="<?php echo $base_url?>staff/pinjaman">
+            <i class="fa fa-hand-stop-o text-aqua"></i> <span>Pinjaman</span>
           </a>
         </li>
         <li class="header">Aksi</li>

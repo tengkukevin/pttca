@@ -11,23 +11,28 @@ $base_url = base_url();
 include_once('../layout/index.php');
 
 
-$sql = "SELECT a.*, b.nama_lengkap, b.jenis_kelamin FROM tb_pengajuan_pinjaman as a 
-    JOIN tb_karyawan as b ON a.id_karyawan = b.nik WHERE a.status = 'Diterima Area Manager'";
+$sql = "SELECT a.*, b.nama_lengkap, b.jenis_kelamin FROM tb_gaji as a 
+    JOIN tb_karyawan as b ON a.id_karyawan = b.nik";
 $list_permohonan = raw($sql);
 ?>
 
 <section class="content-header">
     <h1>
-        Permohonan Pinjaman
+        Pembayaran gaji karyawan
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
-        <li class="active">Permohonan Pinjaman</li>
+        <li class="active">Pembayaran Gaji</li>
     </ol>
 </section>
 
 <section class="content">
+    <div class="row" style="margin-bottom:10px">
+        <div class="col-md-12">
+            <a class="btn btn-success" href="<?= $base_url ?>direktur/penggajian/create.php"><i class="fa fa-plus"></i> Input Gaji</a>
+        </div>
+    </div>
 
     <div class="row">
 
@@ -35,7 +40,7 @@ $list_permohonan = raw($sql);
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Daftar Permohonan Pinjaman Karyawan</h3>
+                        <h3 class="box-title">Daftar Pembayaran Gaji</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -45,9 +50,9 @@ $list_permohonan = raw($sql);
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Jenis Kelamin</th>
-                                        <th>Jumlah Pinjaman</th>
-                                        <th>Tanggal Pengajuan</th>
-                                        <th>Status</th>
+                                        <th>Total Gaji</th>
+                                        <th>Potongan</th>
+                                        <th>Gaji Diterima</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -56,12 +61,16 @@ $list_permohonan = raw($sql);
                                     <?php foreach ($list_permohonan as $k) : ?>
                                         <tr>
                                             <td><?= $i + 1 ?></td>
-                                            <td><?= $k['nama'] ?></td>
+                                            <td><?= $k['nama_lengkap'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
-                                            <td><?= $k['biaya'] ?></td>
-                                            <td><?= $k['tanggal'] ?></td>
-                                            <td><?= $k['status'] ?></td>
-                                            <td></td>
+                                            <td><?= $k['total_gaji'] ?></td>
+                                            <td><?= $k['potongan'] ?></td>
+                                            <td><?= $k['dibayar'] ?></td>
+                                            <td>
+                                                <a href="<?= $base_url ?>direktur/penggajian/detail.php?karyawan=<?= $k['id_karyawan'] ?>&tanggal=<?=$k['tahun'] . "-" . str_pad($k['bulan'], 2, "0", STR_PAD_LEFT)?>" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-eye"></i> Lihat Detail
+                                                </a>
+                                            </td>
                                         </tr>
                                         <?php $i++ ?>
                                     <?php endforeach; ?>

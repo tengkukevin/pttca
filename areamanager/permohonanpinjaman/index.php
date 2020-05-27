@@ -11,9 +11,9 @@ $base_url = base_url();
 include_once('../layout/index.php');
 
 
-$sql = 'SELECT a.*, b.nama, b.jenis_kelamin 
-    FROM tb_pengajuan_pinjaman_borongan as a 
-    JOIN tb_borongan as b ON a.id_borongan = b.id';
+$sql = 'SELECT a.*, b.nama_lengkap, b.jenis_kelamin 
+    FROM tb_pengajuan_pinjaman as a 
+    JOIN tb_karyawan as b ON a.id_karyawan = b.nik';
 $list_permohonan = raw($sql);
 ?>
 
@@ -35,7 +35,7 @@ $list_permohonan = raw($sql);
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Daftar Permohonan Pinjaman Borongan</h3>
+                        <h3 class="box-title">Daftar Permohonan Pinjaman</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -56,13 +56,13 @@ $list_permohonan = raw($sql);
                                     <?php foreach ($list_permohonan as $k) : ?>
                                         <tr>
                                             <td><?= $i + 1 ?></td>
-                                            <td><?= $k['nama'] ?></td>
+                                            <td><?= $k['nama_lengkap'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
                                             <td><?= $k['biaya'] ?></td>
                                             <td><?= $k['tanggal'] ?></td>
                                             <td><?= $k['status'] ?></td>
                                             <td>
-                                                <?php if ($k['status'] == 'Diterima Supervisor'): ?>
+                                                <?php if ($k['status'] == 'Menunggu Persetujuan'): ?>
                                                     <a href="<?= $base_url ?>areamanager/permohonanpinjaman/terima.php?id=<?= $k['id'] ?>" class="btn btn-success btn-sm">
                                                         <i class="fa fa-check"></i> Terima
                                                     </a>
